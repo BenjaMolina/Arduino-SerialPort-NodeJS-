@@ -1,3 +1,14 @@
+
+const express = require('express');
+const socketIo = require('socket.io');
+const http = require('http');
+
+const app = express();
+const servidor = http.createServer(app); //creamos el servidor
+
+const socket = socketIo.listen(servidor);
+
+
 const puertoSerial = require("serialport");
 const Readline = puertoSerial.parsers.Readline; //Leer lineas del puerto serial
 const parse = new Readline();
@@ -18,4 +29,8 @@ serialArduino.on('data',function (data) { //Cuando recibe datos
 
 serialArduino.on('err',function (error) { //Si llega a suceder algun error
     console.log(error.message);
+});
+
+servidor.listen(3000,function () { //Lanzamos el servidor en el puerto 3000
+    console.log("Servidor en puerto 3000");
 });
